@@ -17,7 +17,7 @@ services:
       --rpclisten=0.0.0.0:10009
       --restlisten=0.0.0.0:8080
   express:
-    image: bitgo-express:latest
+    image: bitgo/express:latest
     depends_on:
       - lnd-signer
     ports:
