@@ -1,0 +1,30 @@
+version: '3.8'
+services:
+  lnd-signer:
+    image: lightninglabs/lnd:v0.19.1-beta
+    volumes:
+      - ./lnd-data:/root/.lnd
+      - ./tls:/tls
+    ports:
+      - "10009:10009"
+      - "8080:8080"
+    command: >
+      --bitcoin.signet
+      --bitcoin.active
+      --bitcoin.node=nochainbackend
+      --tlscertpath=/tls/tls.cert
+      --tlskeypath=/tls/tls.key
+      --rpclisten=0.0.0.0:10009
+      --restlisten=0.0.0.0:8080
+  express:
+    image: bitgo-express:latest
+    depends_on:
+      - lnd-signer
+    ports:
+      - "3080:3080"
+    command:
+      - --lightningSignerFileSystemPath=/config/lightning-config.json
+
+    volumes:
+      - ./tls:/tls
+      - ./config:/config
