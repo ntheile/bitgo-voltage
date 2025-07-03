@@ -1,0 +1,6 @@
+{
+  "walletId1": {
+    "url": "hostname-of-signer-node",
+    "tlsCert": "base64-encoded-tls-cert"
+  }
+}
